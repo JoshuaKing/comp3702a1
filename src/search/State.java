@@ -24,5 +24,11 @@ public interface State {
      * @return the cost (non-negative for all legal moves, negative for illegal moves) 
      */
     public double pathcost(Action action);
+    
+    /**
+     * This method calculates the number of misplaced tiles as its heuristic value.
+     * @return Heuristic 1 value of the state
+     */
+    public int getH1();
 
 }

@@ -3,6 +3,7 @@ package search.npuzzle;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import search.Action;
 import search.ActionStatePair;
@@ -157,7 +158,7 @@ public final class NPuzzleState implements State {
      */
     public ActionStatePair[] successor() {
         //ArrayList list=new ArrayList<ActionStatePair>();
-        ArrayList list=new ArrayList();
+        List<ActionStatePair> list=new ArrayList<ActionStatePair>();
         for (int a=0; a<actionSequence.length; a++) {
             try {
                 State state=new NPuzzleState(this, actionSequence[a]);
@@ -167,7 +168,7 @@ public final class NPuzzleState implements State {
             } 
         }
         ActionStatePair[] pairs=new ActionStatePair[list.size()];
-        Iterator iter=list.iterator();
+        Iterator<ActionStatePair> iter=list.iterator();
         for (int i=0; iter.hasNext(); i++) {
             pairs[i]=(ActionStatePair)iter.next();
         }
@@ -233,6 +234,20 @@ public final class NPuzzleState implements State {
             sb.append("\n");
         }
         return sb.toString();
+    }
+    
+    /**
+     * This method calculates the number of misplaced tiles as its heuristic value.
+     * @return Heuristic 1 value of the state
+     */
+    public int getH1() {
+    	int errors = 0;
+		for (int r=0; r<tiles.length; r++) {
+			for (int c=0; c<tiles[r].length; c++) {
+				if (tiles[r][c] != r*4+c+1) errors++;
+			}
+		}
+		return errors;
     }
 
 }

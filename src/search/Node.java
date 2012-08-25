@@ -2,7 +2,10 @@ package search;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 //import java.util.ArrayList;
+
+import search.npuzzle.NPuzzleState;
 
 //import search.fifteen.PuzzleState;
 
@@ -166,8 +169,8 @@ public class Node {
      * usually empty.
      * @return the solution node if one is found, null otherwise
      */
-    //public static Node breadthFirstSearch(State initial, List<Node> fringe) {
-    public static Node breadthFirstSearch(State initial, List fringe) {
+    public static Node breadthFirstSearch(State initial, List<Node> fringe) {
+    //public static Node breadthFirstSearch(State initial, List fringe) {
         // add the initial state to the fringe
         fringe.add(new Node(initial)); 
         // loop through all nodes in the fringe
@@ -188,6 +191,40 @@ public class Node {
         }
         return null;
     }
+    
+    /**
+     * myH1G searches the tree with the Greedy algorithm using heuristic 1 (# misplaced
+     * tiles).
+     * @param initial initial state of the puzzle
+     * @return solution if one is found, null otherwise
+     */
+	public static Node myH1G(State initial) {
+		// TODO Do we need to check for recursive paths?
+		State s = initial;
+		MapQueue queue = new MapQueue();
+		
+		// Check if state is the goal state //
+		while (!s.goal()) {			
+			// If not, expand children //
+			Node n = new Node(s);
+			Node[] children = n.expand();
+			for( Node c : children) {
+				State cs = c.getState();
+				int h1 = cs.getH1();
+
+				// Add children to queue //
+				queue.put(h1, c);
+			}
+			
+			// Pick next closest node to goal //
+			s = queue.getNext().getState();
+			//System.out.println("Next State: H1=" + s.getH1());
+			//System.out.println(s.toString());
+		}
+		// Return goal state node //
+		System.out.println(s.toString());
+		return new Node(s);
+	}
 
 
 }

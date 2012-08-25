@@ -94,8 +94,8 @@ public class NPuzzleSearchApp {
      */
     public static Action[] solveH1G(NPuzzleState state){
         // now perform the search from the "shuffled" initial state (fringe is empty)
-        //Node goal = Node.myH1G(state, new ArrayList());
-        Node goal=Node.breadthFirstSearch(state, new ArrayList());
+        Node goal = Node.myH1G(state);
+        //Node goal=Node.breadthFirstSearch(state, new ArrayList());
         Action[] actions=goal.getActions();
         
         return actions;
