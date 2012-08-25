@@ -249,5 +249,44 @@ public final class NPuzzleState implements State {
 		}
 		return errors;
     }
+    
+    /**
+     * This method calculates the sum of the distances of tiles from its goal
+     * location as its heuristic value.
+     * @return Heuristic 2 value of the state
+     */
+    public int getH2() {
+    	int mdist = 0;
+		for (int r=0; r<tiles.length; r++) {
+			for (int c=0; c<tiles[r].length; c++) {
+				int c1 = (tiles[r][c] - 1) % squareSize;
+				int r1 = ((tiles[r][c] - 1) - c1) / squareSize;
+				
+				if (tiles[r][c] == 0) {
+					c1 = squareSize - 1;
+					r1 = squareSize - 1;
+				}
+				
+				mdist += Math.abs(r - r1) + Math.abs(c - c1);
+			}
+		}
+		return mdist;
+    }
+    
+    /**
+     * This method calculates the number of consecutive tiles in
+     * its goal location from the top-left as its heuristic value.
+     * @return Heuristic 3 value of the state
+     */
+    public int getH3() {
+    	int consecutive = 0;
+		for (int r=0; r<tiles.length; r++) {
+			for (int c=0; c<tiles[r].length; c++) {
+				if (tiles[r][c] != r*4+c+1) return consecutive;
+				consecutive++;
+			}
+		}
+		return consecutive;
+    }
 
 }

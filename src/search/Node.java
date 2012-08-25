@@ -201,29 +201,80 @@ public class Node {
 	public static Node myH1G(State initial) {
 		// TODO Do we need to check for recursive paths?
 		State s = initial;
+		Node node = new Node(s);
 		MapQueue queue = new MapQueue();
 		
 		// Check if state is the goal state //
 		while (!s.goal()) {			
 			// If not, expand children //
-			Node n = new Node(s);
-			Node[] children = n.expand();
+			Node[] children = node.expand();
 			for( Node c : children) {
 				State cs = c.getState();
 				int h1 = cs.getH1();
-
+				
 				// Add children to queue //
 				queue.put(h1, c);
 			}
 			
 			// Pick next closest node to goal //
-			s = queue.getNext().getState();
-			//System.out.println("Next State: H1=" + s.getH1());
-			//System.out.println(s.toString());
+			node = queue.getNext();
+			s = node.getState();
+		}
+		// Return goal state node //
+		return node;
+	}
+	public static Node myH2G(State initial) {
+		// TODO Do we need to check for recursive paths?
+		State s = initial;
+		Node node = new Node(s);
+		MapQueue queue = new MapQueue();
+		
+		// Check if state is the goal state //
+		while (!s.goal()) {			
+			// If not, expand children //
+			Node[] children = node.expand();
+			for( Node c : children) {
+				State cs = c.getState();
+				int h2 = cs.getH2();
+
+				// Add children to queue //
+				queue.put(h2, c);
+			}
+			
+			// Pick next closest node to goal //
+			node = queue.getNext();
+			s = node.getState();
+		}
+		// Return goal state node //
+		return node;
+	}
+	public static Node myH3G(State initial) {
+		// TODO Do we need to check for recursive paths?
+		State s = initial;
+		Node node = new Node(s);
+		MapQueue queue = new MapQueue();
+		
+		// Check if state is the goal state //
+		while (!s.goal()) {			
+			// If not, expand children //
+			Node[] children = node.expand();
+			for( Node c : children) {
+				State cs = c.getState();
+				int h3 = cs.getH3();
+
+				// Add children to queue //
+				queue.put(h3, c);
+			}
+			
+			// Pick next closest node to goal //
+			node = queue.getNext();
+			s = node.getState();
+			System.out.println("Next State: H3=" + s.getH3());
+			System.out.println(s.toString());
 		}
 		// Return goal state node //
 		System.out.println(s.toString());
-		return new Node(s);
+		return node;
 	}
 
 

@@ -31,4 +31,17 @@ public interface State {
      */
     public int getH1();
 
+    /**
+     * This method calculates the sum of the distances of tiles from its goal
+     * location as its heuristic value.
+     * @return Heuristic 2 value of the state
+     */
+    public int getH2();
+    
+    /**
+     * This method calculates the number of consecutive tiles in
+     * its goal location from the top-left as its heuristic value.
+     * @return Heuristic 3 value of the state
+     */
+	public int getH3();
 }
