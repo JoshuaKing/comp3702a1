@@ -288,5 +288,22 @@ public final class NPuzzleState implements State {
 		}
 		return consecutive;
     }
+    
+    /**
+     * This method calculates the sum of the values of tiles in
+     * in each row, and the difference to its required value
+     * as its heuristic value.
+     * @return Heuristic 4 value of the state
+     */
+    public int getH4() {
+    	int consecutive = 0;
+		for (int r=0; r<tiles.length; r++) {
+			for (int c=0; c<tiles[r].length; c++) {
+				if (tiles[r][c] != r*4+c+1) return consecutive;
+				consecutive++;
+			}
+		}
+		return consecutive;
+    }
 
 }
