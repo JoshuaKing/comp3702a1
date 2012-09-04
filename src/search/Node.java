@@ -223,6 +223,40 @@ public class Node {
 		// Return goal state node //
 		return node;
 	}
+	
+	/**
+     * myH1A searches the tree with the A* algorithm using heuristic 1 (# misplaced
+     * tiles).
+     * @param initial initial state of the puzzle
+     * @return solution if one is found, null otherwise
+     */
+	public static Node myH1A(State initial) {
+		// TODO Do we need to check for recursive paths?
+		State s = initial;
+		Node node = new Node(s);
+		MapQueue queue = new MapQueue();
+		
+		// Check if state is the goal state //
+		while (!s.goal()) {			
+			// If not, expand children //
+			Node[] children = node.expand();
+			for( Node c : children) {
+				State cs = c.getState();
+				int h1 = cs.getH1();
+				double cost = s.pathcost(c.getAction());
+				
+				// Add children to queue //
+				queue.put((int) (h1 + cost), c);
+			}
+			
+			// Pick next closest node to goal //
+			node = queue.getNext();
+			s = node.getState();
+		}
+		// Return goal state node //
+		return node;
+	}
+	
 	public static Node myH2G(State initial) {
 		// TODO Do we need to check for recursive paths?
 		State s = initial;
@@ -248,6 +282,34 @@ public class Node {
 		// Return goal state node //
 		return node;
 	}
+
+	public static Node myH2A(State initial) {
+		// TODO Do we need to check for recursive paths?
+		State s = initial;
+		Node node = new Node(s);
+		MapQueue queue = new MapQueue();
+		
+		// Check if state is the goal state //
+		while (!s.goal()) {			
+			// If not, expand children //
+			Node[] children = node.expand();
+			for( Node c : children) {
+				State cs = c.getState();
+				int h2 = cs.getH2();
+				double cost = s.pathcost(c.getAction());
+
+				// Add children to queue //
+				queue.put((int) (h2 + cost), c);
+			}
+			
+			// Pick next closest node to goal //
+			node = queue.getNext();
+			s = node.getState();
+		}
+		// Return goal state node //
+		return node;
+	}
+	
 	public static Node myH3G(State initial) {
 		// TODO Do we need to check for recursive paths?
 		State s = initial;
@@ -276,6 +338,5 @@ public class Node {
 		System.out.println(s.toString());
 		return node;
 	}
-
 
 }
