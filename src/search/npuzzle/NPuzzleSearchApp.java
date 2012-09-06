@@ -17,26 +17,46 @@ public class NPuzzleSearchApp {
         //PuzzleState myState=new PuzzleState();
 
     	// a size of 4 gives the 15 puzzle
-    	int sizeOfPuzzle = 4;
+    	int sizeOfPuzzle = 6;
+    	
+
+    	//int solutionDepth = 8;
     	
         // Create a random puzzle and memorise the puzzle state.
-        NPuzzleState myState= randomPuzzle(sizeOfPuzzle,10);
-        NPuzzleState myState2 = new NPuzzleState(myState);
+        NPuzzleState myState= randomPuzzle(sizeOfPuzzle, 20);
+        
+        // Check state has solutions at depth 'solutionDepth' //
+        /*Action[] actionstest = solveH3A(new NPuzzleState(myState));
+        while (actionstest.length != solutionDepth) {
+            myState= randomPuzzle(sizeOfPuzzle, solutionDepth);
+            actionstest = solveH3A(new NPuzzleState(myState));
+        }
+        System.out.println("Depth: " + solutionDepth + " Puzzle: " + sizeOfPuzzle);
+        System.out.println("----------------------------------------");
+        */
 
         // or "shuffle" the tiles around manually a little bit...
-        //myState=new PuzzleState(myState, PuzzleState.MOVE_LEFT);
-        //myState=new PuzzleState(myState, PuzzleState.MOVE_UP);
-        //myState=new PuzzleState(myState, PuzzleState.MOVE_LEFT);
-        //myState=new PuzzleState(myState, PuzzleState.MOVE_UP);
-        //myState=new PuzzleState(myState, PuzzleState.MOVE_UP);
+        /*myState=new NPuzzleState(myState, NPuzzleState.MOVE_UP);
+        myState=new NPuzzleState(myState, NPuzzleState.MOVE_LEFT);
+        myState=new NPuzzleState(myState, NPuzzleState.MOVE_UP);
+        myState=new NPuzzleState(myState, NPuzzleState.MOVE_LEFT);
+        myState=new NPuzzleState(myState, NPuzzleState.MOVE_DOWN);
+        myState=new NPuzzleState(myState, NPuzzleState.MOVE_DOWN);
+        myState=new NPuzzleState(myState, NPuzzleState.MOVE_RIGHT);
+        myState=new NPuzzleState(myState, NPuzzleState.MOVE_UP);
+        */
+        NPuzzleState myState2 = new NPuzzleState(myState);
 
         // now perform the search from the "shuffled" initial state (fringe is empty), and
         // pull out the actions that were used to generate this goal state from the initial state
-        Action[] actions1G = solveH1G(new NPuzzleState(myState));
         Action[] actions1A = solveH1A(new NPuzzleState(myState));
-        Action[] actions2G = solveH2G(new NPuzzleState(myState));
+        Action[] actions1G = solveH1G(new NPuzzleState(myState));
         Action[] actions2A = solveH2A(new NPuzzleState(myState));
+        Action[] actions2G = solveH2G(new NPuzzleState(myState));
+        Action[] actions3A = solveH3A(new NPuzzleState(myState));
         Action[] actions3G = solveH3G(new NPuzzleState(myState));
+        Action[] actions4A = solveH4A(new NPuzzleState(myState));
+        Action[] actions4G = solveH4G(new NPuzzleState(myState));
 
         // List the initial state and results of actions performed.
         System.out.println("Initial state:");
@@ -74,15 +94,40 @@ public class NPuzzleSearchApp {
         }
         
         System.out.println("Solution via H3 with Greedy:-------------");
-        for (int i=0; i<actions1G.length; i++) {
-            System.out.println((i+1)+": "+actions1G[actions3G.length-1-i]);
+        myState2 = new NPuzzleState(myState);
+        for (int i=0; i<actions3G.length; i++) {
+            System.out.println((i+1)+": "+actions3G[actions3G.length-1-i]);
             NPuzzleState.performAction(myState2,actions3G[actions3G.length-1-i]);
+            System.out.println(myState2.toString());
+        }
+        
+        System.out.println("Solution via H3 with A*:-------------");
+        myState2 = new NPuzzleState(myState);
+        for (int i=0; i<actions3A.length; i++) {
+            System.out.println((i+1)+": "+actions3A[actions3A.length-1-i]);
+            NPuzzleState.performAction(myState2,actions3A[actions3A.length-1-i]);
+            System.out.println(myState2.toString());
+        }
+        
+        System.out.println("Solution via H4 with Greedy:-------------");
+        myState2 = new NPuzzleState(myState);
+        for (int i=0; i<actions4G.length; i++) {
+            System.out.println((i+1)+": "+actions4G[actions4G.length-1-i]);
+            NPuzzleState.performAction(myState2,actions4G[actions4G.length-1-i]);
+            System.out.println(myState2.toString());
+        }
+        
+        System.out.println("Solution via H4 with A*:-------------");
+        myState2 = new NPuzzleState(myState);
+        for (int i=0; i<actions4A.length; i++) {
+            System.out.println((i+1)+": "+actions4A[actions4A.length-1-i]);
+            NPuzzleState.performAction(myState2,actions4A[actions4A.length-1-i]);
             System.out.println(myState2.toString());
         }
         
     }
 
-    /**
+	/**
      * Example solve
      * @param state initial puzzle state
      */
@@ -117,8 +162,8 @@ public class NPuzzleSearchApp {
      */
     public static Action[] solveH1A(NPuzzleState state){
         // now perform the search from the "shuffled" initial state (fringe is empty)
-        //Node goal = Node.myH1A(state, new ArrayList());
-        Node goal=Node.breadthFirstSearch(state, new ArrayList());
+        Node goal = Node.myH1A(state);
+        //Node goal=Node.breadthFirstSearch(state, new ArrayList());
         Action[] actions=goal.getActions();
         
         return actions;
@@ -147,8 +192,8 @@ public class NPuzzleSearchApp {
      */
     public static Action[] solveH2A(NPuzzleState state){
         // now perform the search from the "shuffled" initial state (fringe is empty)
-        //Node goal = Node.myH2A(state, new ArrayList());
-        Node goal=Node.breadthFirstSearch(state, new ArrayList());
+        Node goal = Node.myH2A(state);
+        //Node goal=Node.breadthFirstSearch(state, new ArrayList());
         Action[] actions=goal.getActions();
         
         return actions;
@@ -163,6 +208,51 @@ public class NPuzzleSearchApp {
    public static Action[] solveH3G(NPuzzleState state){
        // now perform the search from the "shuffled" initial state (fringe is empty)
        Node goal = Node.myH3G(state);
+       //Node goal=Node.breadthFirstSearch(state, new ArrayList());
+       Action[] actions=goal.getActions();
+       
+       return actions;
+   }
+   
+   /**
+    * Example solve
+    * You must change this function to solve the problem with your own 
+    * A* implementation with heuristic function 3.
+    * @param state initial puzzle state
+    */
+   public static Action[] solveH3A(NPuzzleState state){
+       // now perform the search from the "shuffled" initial state (fringe is empty)
+       Node goal = Node.myH3A(state);
+       //Node goal=Node.breadthFirstSearch(state, new ArrayList());
+       Action[] actions=goal.getActions();
+       
+       return actions;
+   }
+   
+   /**
+    * Example solve
+    * You must change this function to solve the problem with your own 
+    * Greedy implementation with heuristic function 4.
+    * @param state initial puzzle state
+    */
+   public static Action[] solveH4G(NPuzzleState state){
+       // now perform the search from the "shuffled" initial state (fringe is empty)
+       Node goal = Node.myH4G(state);
+       //Node goal=Node.breadthFirstSearch(state, new ArrayList());
+       Action[] actions=goal.getActions();
+       
+       return actions;
+   }
+   
+   /**
+    * Example solve
+    * You must change this function to solve the problem with your own 
+    * A* implementation with heuristic function 4.
+    * @param state initial puzzle state
+    */
+   public static Action[] solveH4A(NPuzzleState state){
+       // now perform the search from the "shuffled" initial state (fringe is empty)
+       Node goal = Node.myH4A(state);
        //Node goal=Node.breadthFirstSearch(state, new ArrayList());
        Action[] actions=goal.getActions();
        

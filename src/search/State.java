@@ -39,9 +39,17 @@ public interface State {
     public int getH2();
     
     /**
-     * This method calculates the number of consecutive tiles in
-     * its goal location from the top-left as its heuristic value.
+     * This method calculates the number of swaps the 'space'
+     * tile makes with other tiles to reach the goal state as
+     * its heuristic value.
      * @return Heuristic 3 value of the state
      */
 	public int getH3();
+
+	/**
+     * This method calculates the number of tiles not in the correct column
+     * plus the number of tiles not in the correct row as its heuristic value.
+     * @return Heuristic 4 value of the state
+     */
+	public int getH4();
 }

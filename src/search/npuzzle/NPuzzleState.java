@@ -244,7 +244,7 @@ public final class NPuzzleState implements State {
     	int errors = 0;
 		for (int r=0; r<tiles.length; r++) {
 			for (int c=0; c<tiles[r].length; c++) {
-				if (tiles[r][c] != r*4+c+1) errors++;
+				if (tiles[r][c] != r*squareSize+c+1) errors++;
 			}
 		}
 		return errors;
@@ -274,36 +274,67 @@ public final class NPuzzleState implements State {
     }
     
     /**
-     * This method calculates the number of consecutive tiles in
-     * its goal location from the top-left as its heuristic value.
+     * This method calculates the number of swaps the 'space'
+     * tile makes with other tiles to reach the goal state as
+     * its heuristic value.
      * @return Heuristic 3 value of the state
      */
     public int getH3() {
-    	int consecutive = 0;
-		for (int r=0; r<tiles.length; r++) {
+    	int numswaps = 0, space = -1;
+    	List<Integer> permutation = new ArrayList<Integer>();
+    	
+    	for (int r=0; r<tiles.length; r++) {
 			for (int c=0; c<tiles[r].length; c++) {
-				if (tiles[r][c] != r*4+c+1) return consecutive;
-				consecutive++;
+				// record the position of the 'space' tile //
+				if (tiles[r][c] == 0) space = permutation.size();
+				permutation.add(tiles[r][c]);
 			}
 		}
-		return consecutive;
+    	while (true) {
+	    	int swap = -1;
+	    	
+	    	// Check if space is in last position //
+	    	if (space == permutation.size() - 1) {
+				for (int i=0; i<permutation.size() - 1; i++) {
+					if (permutation.get(i) == i+1) continue;
+					
+					swap = i;
+					break;
+				}
+	    	} else {
+	    		for (int i=0; i<permutation.size(); i++) {
+					if (permutation.get(i) != space + 1) continue;
+					
+					swap = i;
+					break;
+				}
+	    	}
+	    	
+	    	if (swap == -1) return numswaps;
+	    	
+	    	permutation.set(space, permutation.get(swap));	// Insert the swap tile into the space
+	    	permutation.set(swap, 0);	// Insert the space in the tile spot
+	    	space = swap;	// Update position of space
+	    	numswaps++;			// Update number of swaps
+    	}
     }
     
     /**
-     * This method calculates the sum of the values of tiles in
-     * in each row, and the difference to its required value
-     * as its heuristic value.
+     * This method calculates the number of tiles not in the correct column
+     * plus the number of tiles not in the correct row as its heuristic value.
      * @return Heuristic 4 value of the state
      */
     public int getH4() {
-    	int consecutive = 0;
+    	int incorrectrow = 0, incorrectcolumn = 0;
 		for (int r=0; r<tiles.length; r++) {
 			for (int c=0; c<tiles[r].length; c++) {
-				if (tiles[r][c] != r*4+c+1) return consecutive;
-				consecutive++;
+				int c1 = (tiles[r][c] - 1) % squareSize;
+				int r1 = ((tiles[r][c] - 1) - c1) / squareSize;
+				
+				if (r1 != r) incorrectrow++;
+				if (c1 != c) incorrectcolumn++;
 			}
 		}
-		return consecutive;
+		return incorrectrow + incorrectcolumn;
     }
-
 }
