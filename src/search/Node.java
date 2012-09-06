@@ -206,14 +206,30 @@ public class Node {
 		MapQueue queue = new MapQueue();
 		
 		// Check if state is the goal state //
+		int n = 0;
 		while (!s.goal()) {			
 			// If not, expand children //
 			Node[] children = node.expand();
 			for( Node c : children) {
 				State cs = c.getState();
-				int h = -1;
+				
+				// Check repeated states //
+				boolean repeatedState = false;
+				for (int i = 0; i < repeated.size(); i++) {
+					if (!repeated.get(i).equals(cs)) continue;
+					
+					repeatedState = true;
+					break;
+				}
+				if (repeatedState) continue;
+				repeated.add(cs);
+				
+				// Increment number of nodes checked //
+				n++;
 				
 				// Evaluate specified heuristic //
+				int h = -1;
+				
 				if (heuristic == 1) h = cs.getH1();
 				else if (heuristic == 2) h = cs.getH2();
 				else if (heuristic == 3) h = cs.getH3();
@@ -224,20 +240,11 @@ public class Node {
 			}
 			
 			// Pick next closest node to goal + check for repeated states //
-			boolean found = true;
-			while (found) {
-				found = false;
-				node = queue.getNext();
-				s = node.getState();
-				for (int i = 0; i < repeated.size(); i++) {
-					if (repeated.get(i).equals(s)) {
-						found = true;
-						break;
-					}
-				}
-			}
-			repeated.add(s);
+			node = queue.getNext();
+			s = node.getState();
 		}
+		
+		System.out.println("H" + heuristic + " EBF [Greedy]\t" + effectiveBranchingFactor(n, node.getDepth()));
 		
 		// Return goal state node //
 		return node;
@@ -253,16 +260,33 @@ public class Node {
 		State s = initial;
 		Node node = new Node(s);
 		MapQueue queue = new MapQueue();
+		List<State> repeated = new ArrayList<State>();	// Check repeated states for better EBF
 		
 		// Check if state is the goal state //
+		int n = 0;
 		while (!s.goal()) {			
 			// If not, expand children //
 			Node[] children = node.expand();
 			for( Node c : children) {
 				State cs = c.getState();
-				int h = -1;
+				
+				// Check repeated states //
+				boolean repeatedState = false;
+				for (int i = 0; i < repeated.size(); i++) {
+					if (!repeated.get(i).equals(cs)) continue;
+					
+					repeatedState = true;
+					break;
+				}
+				if (repeatedState) continue;
+				repeated.add(cs);
+				
+				// Increment number of nodes checked //
+				n++;
 				
 				// Evaluate specified heuristic //
+				int h = -1;
+				
 				if (heuristic == 1) h = cs.getH1();
 				else if (heuristic == 2) h = cs.getH2();
 				else if (heuristic == 3) h = cs.getH3();
@@ -277,6 +301,8 @@ public class Node {
 			node = queue.getNext();
 			s = node.getState();
 		}
+		
+		System.out.println("H" + heuristic + " EBF [A*]\t" + effectiveBranchingFactor(n, node.getDepth()));
 		
 		// Return goal state node //
 		return node;

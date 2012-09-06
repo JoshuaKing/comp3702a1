@@ -21,6 +21,16 @@ public class NPuzzleSearchApp {
     	
         // Create a random puzzle and memorise the puzzle state.
         NPuzzleState myState= randomPuzzle(sizeOfPuzzle, 10);
+        
+        int solutionDepth = 8;
+        
+        Action[] actionstest = solveH3A(new NPuzzleState(myState));
+        while (actionstest.length != solutionDepth) {
+        	myState= randomPuzzle(sizeOfPuzzle, solutionDepth);
+        	actionstest = solveH3A(new NPuzzleState(myState));
+        }
+        System.out.println("----------------------------------------");
+        
 
         // or "shuffle" the tiles around manually a little bit...
         /*myState=new NPuzzleState(myState, NPuzzleState.MOVE_UP);
@@ -46,7 +56,7 @@ public class NPuzzleSearchApp {
         Action[] actions4G = solveH4G(new NPuzzleState(myState));
 
         // List the initial state and results of actions performed.
-        System.out.println("Initial state:");
+        /*System.out.println("Initial state:");
         System.out.println(myState2.toString());
 
         System.out.println("Solution via H1 with Greedy:-------------");
@@ -110,7 +120,7 @@ public class NPuzzleSearchApp {
             System.out.println((i+1)+": "+actions4A[actions4A.length-1-i]);
             NPuzzleState.performAction(myState2,actions4A[actions4A.length-1-i]);
             System.out.println(myState2.toString());
-        }
+        }*/
         
     }
 
