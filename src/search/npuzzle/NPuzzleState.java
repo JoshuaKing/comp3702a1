@@ -244,6 +244,7 @@ public final class NPuzzleState implements State {
     	int errors = 0;
 		for (int r=0; r<tiles.length; r++) {
 			for (int c=0; c<tiles[r].length; c++) {
+				if (tiles[r][c] == 0) continue;		// Do not include space
 				if (tiles[r][c] != r*squareSize+c+1) errors++;
 			}
 		}
@@ -259,6 +260,8 @@ public final class NPuzzleState implements State {
     	int mdist = 0;
 		for (int r=0; r<tiles.length; r++) {
 			for (int c=0; c<tiles[r].length; c++) {
+				if (tiles[r][c] == 0) continue;		// Do not include space
+				
 				int c1 = (tiles[r][c] - 1) % squareSize;
 				int r1 = ((tiles[r][c] - 1) - c1) / squareSize;
 				
@@ -315,7 +318,7 @@ public final class NPuzzleState implements State {
 	    	permutation.set(space, permutation.get(swap));	// Insert the swap tile into the space
 	    	permutation.set(swap, 0);	// Insert the space in the tile spot
 	    	space = swap;	// Update position of space
-	    	numswaps++;			// Update number of swaps
+	    	numswaps++;		// Update number of swaps
     	}
     }
     
@@ -328,6 +331,8 @@ public final class NPuzzleState implements State {
     	int incorrectrow = 0, incorrectcolumn = 0;
 		for (int r=0; r<tiles.length; r++) {
 			for (int c=0; c<tiles[r].length; c++) {
+				if (tiles[r][c] == 0) continue;		// Do not include space
+				
 				int c1 = (tiles[r][c] - 1) % squareSize;
 				int r1 = ((tiles[r][c] - 1) - c1) / squareSize;
 				
