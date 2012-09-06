@@ -194,29 +194,33 @@ public class Node {
     }
     
     /**
-     * myH1G searches the tree with the Greedy algorithm using heuristic 1 (# misplaced
-     * tiles).
+     * myHG searches the tree with the Greedy algorithm using heuristics.
      * @param initial initial state of the puzzle
+     * @param heuristic integer value of the desired heuristic
      * @return solution if one is found, null otherwise
      */
-	public static Node myH1G(State initial) {
+	public static Node myHG(State initial, int heuristic) {
 		List<State> repeated = new ArrayList<State>();
 		State s = initial;
 		Node node = new Node(s);
 		MapQueue queue = new MapQueue();
 		
 		// Check if state is the goal state //
-		int n = 0;
 		while (!s.goal()) {			
 			// If not, expand children //
 			Node[] children = node.expand();
 			for( Node c : children) {
 				State cs = c.getState();
-				int h1 = cs.getH1();
+				int h = -1;
+				
+				// Evaluate specified heuristic //
+				if (heuristic == 1) h = cs.getH1();
+				else if (heuristic == 2) h = cs.getH2();
+				else if (heuristic == 3) h = cs.getH3();
+				else if (heuristic == 4) h = cs.getH4();
 				
 				// Add children to queue //
-				queue.put(h1, c);
-				n++;
+				queue.put(h, c);
 			}
 			
 			// Pick next closest node to goal + check for repeated states //
@@ -234,264 +238,45 @@ public class Node {
 			}
 			repeated.add(s);
 		}
-		// Print EBF of solution //
-		//System.out.println("H1G\t" + effectiveBranchingFactor(n, node.getDepth()));
 		
 		// Return goal state node //
 		return node;
 	}
 	
 	/**
-     * myH1A searches the tree with the A* algorithm using heuristic 1 (# misplaced
-     * tiles).
+     * myHA searches the tree with the A* algorithm using heuristics.
      * @param initial initial state of the puzzle
+     * @param heuristic integer value of the desired heuristic
      * @return solution if one is found, null otherwise
      */
-	public static Node myH1A(State initial) {
+	public static Node myHA(State initial, int heuristic) {
 		State s = initial;
 		Node node = new Node(s);
 		MapQueue queue = new MapQueue();
 		
 		// Check if state is the goal state //
-		int n = 0;
 		while (!s.goal()) {			
 			// If not, expand children //
 			Node[] children = node.expand();
 			for( Node c : children) {
 				State cs = c.getState();
-				int h1 = cs.getH1();
+				int h = -1;
+				
+				// Evaluate specified heuristic //
+				if (heuristic == 1) h = cs.getH1();
+				else if (heuristic == 2) h = cs.getH2();
+				else if (heuristic == 3) h = cs.getH3();
+				else if (heuristic == 4) h = cs.getH4();
 				double cost = c.getCost() + s.pathcost(c.getAction());
 				
 				// Add children to queue //
-				queue.put((int) (h1 + cost), c);
-				n++;
+				queue.put((int) (h + cost), c);
 			}
 			
 			// Pick next closest node to goal //
 			node = queue.getNext();
 			s = node.getState();
 		}
-		// Print EBF of solution //
-		//System.out.println("H1A\t" + effectiveBranchingFactor(n, node.getDepth()));
-		
-		// Return goal state node //
-		return node;
-	}
-	
-	public static Node myH2G(State initial) {
-		List<State> repeated = new ArrayList<State>();
-		State s = initial;
-		Node node = new Node(s);
-		MapQueue queue = new MapQueue();
-		
-		// Check if state is the goal state //
-		int n = 0;
-		while (!s.goal()) {			
-			// If not, expand children //
-			Node[] children = node.expand();
-			for( Node c : children) {
-				State cs = c.getState();
-				int h2 = cs.getH2();
-
-				// Add children to queue //
-				queue.put(h2, c);
-				n++;
-			}
-			
-			// Pick next closest node to goal + check for repeated states //
-			boolean found = true;
-			while (found) {
-				found = false;
-				node = queue.getNext();
-				s = node.getState();
-				for (int i = 0; i < repeated.size(); i++) {
-					if (repeated.get(i).equals(s)) {
-						found = true;
-						break;
-					}
-				}
-			}
-			repeated.add(s);
-		}
-		// Print EBF of solution //
-		//System.out.println("H2G\t" + effectiveBranchingFactor(n, node.getDepth()));
-		
-		// Return goal state node //
-		return node;
-	}
-
-	public static Node myH2A(State initial) {
-		State s = initial;
-		Node node = new Node(s);
-		MapQueue queue = new MapQueue();
-		
-		// Check if state is the goal state //
-		int n = 0;
-		while (!s.goal()) {			
-			// If not, expand children //
-			Node[] children = node.expand();
-			for( Node c : children) {
-				State cs = c.getState();
-				int h2 = cs.getH2();
-				double cost = c.getCost() + s.pathcost(c.getAction());
-
-				// Add children to queue //
-				queue.put((int) (h2 + cost), c);
-				n++;
-			}
-			
-			// Pick next closest node to goal //
-			node = queue.getNext();
-			s = node.getState();
-		}
-		// Print EBF of solution //
-		//System.out.println("H2A\t" + effectiveBranchingFactor(n, node.getDepth()));
-		
-		// Return goal state node //
-		return node;
-	}
-	
-	public static Node myH3G(State initial) {
-		List<State> repeated = new ArrayList<State>();
-		State s = initial;
-		Node node = new Node(s);
-		MapQueue queue = new MapQueue();
-		
-		// Check if state is the goal state //
-		int n = 0;
-		while (!s.goal()) {			
-			// If not, expand children //
-			Node[] children = node.expand();
-			for( Node c : children) {
-				State cs = c.getState();
-				int h3 = cs.getH3();
-
-				// Add children to queue //
-				queue.put(h3, c);
-				n++;
-			}
-			
-			// Pick next closest node to goal + check for repeated states //
-			boolean found = true;
-			while (found) {
-				found = false;
-				node = queue.getNext();
-				s = node.getState();
-				for (int i = 0; i < repeated.size(); i++) {
-					if (repeated.get(i).equals(s)) {
-						found = true;
-						break;
-					}
-				}
-			}
-			repeated.add(s);
-		}
-		// Print EBF of solution //
-		//System.out.println("H3G\t" + effectiveBranchingFactor(n, node.getDepth()));
-		
-		// Return goal state node //
-		return node;
-	}
-	
-	public static Node myH3A(State initial) {
-		State s = initial;
-		Node node = new Node(s);
-		MapQueue queue = new MapQueue();
-		
-		// Check if state is the goal state //
-		int n = 0;
-		while (!s.goal()) {			
-			// If not, expand children //
-			Node[] children = node.expand();
-			for( Node c : children) {
-				State cs = c.getState();
-				int h3 = cs.getH3();
-				double cost = c.getCost() + s.pathcost(c.getAction());
-
-				// Add children to queue //
-				queue.put((int) (h3 + cost), c);
-				n++;
-			}
-			
-			// Pick next closest node to goal //
-			node = queue.getNext();
-			s = node.getState();
-		}
-		// Print EBF of solution //
-		//System.out.println("H3A\t" + effectiveBranchingFactor(n, node.getDepth()));
-		
-		// Return goal state node //
-		return node;
-	}
-	
-	public static Node myH4G(State initial) {
-		List<State> repeated = new ArrayList<State>();
-		State s = initial;
-		Node node = new Node(s);
-		MapQueue queue = new MapQueue();
-		
-		// Check if state is the goal state //
-		int n = 0;
-		while (!s.goal()) {			
-			// If not, expand children //
-			Node[] children = node.expand();
-			for( Node c : children) {
-				State cs = c.getState();
-				int h4 = cs.getH4();
-
-				// Add children to queue //
-				queue.put(h4, c);
-				n++;
-			}
-			
-			// Pick next closest node to goal + check for repeated states //
-			boolean found = true;
-			while (found) {
-				found = false;
-				node = queue.getNext();
-				s = node.getState();
-				for (int i = 0; i < repeated.size(); i++) {
-					if (repeated.get(i).equals(s)) {
-						found = true;
-						break;
-					}
-				}
-			}
-			repeated.add(s);
-		}
-		// Print EBF of solution //
-		//System.out.println("H4G\t" + effectiveBranchingFactor(n, node.getDepth()));
-		
-		// Return goal state node //
-		return node;
-	}
-	
-	public static Node myH4A(State initial) {
-		State s = initial;
-		Node node = new Node(s);
-		MapQueue queue = new MapQueue();
-		
-		// Check if state is the goal state //
-		int n = 0;
-		while (!s.goal()) {			
-			// If not, expand children //
-			Node[] children = node.expand();
-			for( Node c : children) {
-				State cs = c.getState();
-				int h4 = cs.getH4();
-				double cost = c.getCost() + s.pathcost(c.getAction());
-
-				// Add children to queue //
-				queue.put((int) (h4 + cost), c);
-				n++;
-			}
-			
-			// Pick next closest node to goal //
-			node = queue.getNext();
-			s = node.getState();
-		}
-		// Print EBF of solution //
-		//System.out.println("H4A\t" + effectiveBranchingFactor(n, node.getDepth()));
 		
 		// Return goal state node //
 		return node;

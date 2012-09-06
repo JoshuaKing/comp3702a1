@@ -19,21 +19,8 @@ public class NPuzzleSearchApp {
     	// a size of 4 gives the 15 puzzle
     	int sizeOfPuzzle = 6;
     	
-
-    	//int solutionDepth = 8;
-    	
         // Create a random puzzle and memorise the puzzle state.
-        NPuzzleState myState= randomPuzzle(sizeOfPuzzle, 20);
-        
-        // Check state has solutions at depth 'solutionDepth' //
-        /*Action[] actionstest = solveH3A(new NPuzzleState(myState));
-        while (actionstest.length != solutionDepth) {
-            myState= randomPuzzle(sizeOfPuzzle, solutionDepth);
-            actionstest = solveH3A(new NPuzzleState(myState));
-        }
-        System.out.println("Depth: " + solutionDepth + " Puzzle: " + sizeOfPuzzle);
-        System.out.println("----------------------------------------");
-        */
+        NPuzzleState myState= randomPuzzle(sizeOfPuzzle, 10);
 
         // or "shuffle" the tiles around manually a little bit...
         /*myState=new NPuzzleState(myState, NPuzzleState.MOVE_UP);
@@ -147,7 +134,7 @@ public class NPuzzleSearchApp {
      */
     public static Action[] solveH1G(NPuzzleState state){
         // now perform the search from the "shuffled" initial state (fringe is empty)
-        Node goal = Node.myH1G(state);
+        Node goal = Node.myHG(state, 1);
         //Node goal=Node.breadthFirstSearch(state, new ArrayList());
         Action[] actions=goal.getActions();
         
@@ -162,7 +149,7 @@ public class NPuzzleSearchApp {
      */
     public static Action[] solveH1A(NPuzzleState state){
         // now perform the search from the "shuffled" initial state (fringe is empty)
-        Node goal = Node.myH1A(state);
+        Node goal = Node.myHA(state, 1);
         //Node goal=Node.breadthFirstSearch(state, new ArrayList());
         Action[] actions=goal.getActions();
         
@@ -177,7 +164,7 @@ public class NPuzzleSearchApp {
      */
     public static Action[] solveH2G(NPuzzleState state){
         // now perform the search from the "shuffled" initial state (fringe is empty)
-        Node goal = Node.myH2G(state);
+        Node goal = Node.myHG(state, 2);
         //Node goal=Node.breadthFirstSearch(state, new ArrayList());
         Action[] actions=goal.getActions();
         
@@ -192,7 +179,7 @@ public class NPuzzleSearchApp {
      */
     public static Action[] solveH2A(NPuzzleState state){
         // now perform the search from the "shuffled" initial state (fringe is empty)
-        Node goal = Node.myH2A(state);
+        Node goal = Node.myHA(state, 2);
         //Node goal=Node.breadthFirstSearch(state, new ArrayList());
         Action[] actions=goal.getActions();
         
@@ -207,7 +194,7 @@ public class NPuzzleSearchApp {
     */
    public static Action[] solveH3G(NPuzzleState state){
        // now perform the search from the "shuffled" initial state (fringe is empty)
-       Node goal = Node.myH3G(state);
+       Node goal = Node.myHG(state, 3);
        //Node goal=Node.breadthFirstSearch(state, new ArrayList());
        Action[] actions=goal.getActions();
        
@@ -222,7 +209,7 @@ public class NPuzzleSearchApp {
     */
    public static Action[] solveH3A(NPuzzleState state){
        // now perform the search from the "shuffled" initial state (fringe is empty)
-       Node goal = Node.myH3A(state);
+       Node goal = Node.myHA(state, 3);
        //Node goal=Node.breadthFirstSearch(state, new ArrayList());
        Action[] actions=goal.getActions();
        
@@ -237,7 +224,7 @@ public class NPuzzleSearchApp {
     */
    public static Action[] solveH4G(NPuzzleState state){
        // now perform the search from the "shuffled" initial state (fringe is empty)
-       Node goal = Node.myH4G(state);
+       Node goal = Node.myHG(state, 4);
        //Node goal=Node.breadthFirstSearch(state, new ArrayList());
        Action[] actions=goal.getActions();
        
@@ -252,7 +239,7 @@ public class NPuzzleSearchApp {
     */
    public static Action[] solveH4A(NPuzzleState state){
        // now perform the search from the "shuffled" initial state (fringe is empty)
-       Node goal = Node.myH4A(state);
+       Node goal = Node.myHA(state, 4);
        //Node goal=Node.breadthFirstSearch(state, new ArrayList());
        Action[] actions=goal.getActions();
        
