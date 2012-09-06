@@ -17,18 +17,23 @@ public class NPuzzleSearchApp {
         //PuzzleState myState=new PuzzleState();
 
     	// a size of 4 gives the 15 puzzle
-    	int sizeOfPuzzle = 4;
+    	int sizeOfPuzzle = 6;
+    	
+
+    	//int solutionDepth = 8;
     	
         // Create a random puzzle and memorise the puzzle state.
-    	int solutionDepth = 4;
-    	
-        NPuzzleState myState= randomPuzzle(sizeOfPuzzle, solutionDepth);
-        Action[] actionstest = solveH3A(new NPuzzleState(myState));
+        NPuzzleState myState= randomPuzzle(sizeOfPuzzle, 20);
+        
+        // Check state has solutions at depth 'solutionDepth' //
+        /*Action[] actionstest = solveH3A(new NPuzzleState(myState));
         while (actionstest.length != solutionDepth) {
             myState= randomPuzzle(sizeOfPuzzle, solutionDepth);
             actionstest = solveH3A(new NPuzzleState(myState));
         }
+        System.out.println("Depth: " + solutionDepth + " Puzzle: " + sizeOfPuzzle);
         System.out.println("----------------------------------------");
+        */
 
         // or "shuffle" the tiles around manually a little bit...
         /*myState=new NPuzzleState(myState, NPuzzleState.MOVE_UP);
@@ -54,14 +59,14 @@ public class NPuzzleSearchApp {
         Action[] actions4G = solveH4G(new NPuzzleState(myState));
 
         // List the initial state and results of actions performed.
-        /*System.out.println("Initial state:");
+        System.out.println("Initial state:");
         System.out.println(myState2.toString());
 
         System.out.println("Solution via H1 with Greedy:-------------");
         for (int i=0; i<actions1G.length; i++) {
             System.out.println((i+1)+": "+actions1G[actions1G.length-1-i]);
             NPuzzleState.performAction(myState2,actions1G[actions1G.length-1-i]);
-            //System.out.println(myState2.toString());
+            System.out.println(myState2.toString());
         }
 
         System.out.println("Solution via H1 with A*:-------------");
@@ -69,7 +74,7 @@ public class NPuzzleSearchApp {
         for (int i=0; i<actions1A.length; i++) {
             System.out.println((i+1)+": "+actions1A[actions1A.length-1-i]);
             NPuzzleState.performAction(myState2,actions1A[actions1A.length-1-i]);
-            //System.out.println(myState2.toString());
+            System.out.println(myState2.toString());
         }
 
         System.out.println("Solution via H2 with Greedy:-------------");
@@ -77,7 +82,7 @@ public class NPuzzleSearchApp {
         for (int i=0; i<actions2G.length; i++) {
             System.out.println((i+1)+": "+actions2G[actions2G.length-1-i]);
             NPuzzleState.performAction(myState2,actions2G[actions2G.length-1-i]);
-            //System.out.println(myState2.toString());
+            System.out.println(myState2.toString());
         }
 
         System.out.println("Solution via H2 with A*:-------------");
@@ -85,7 +90,7 @@ public class NPuzzleSearchApp {
         for (int i=0; i<actions2A.length; i++) {
             System.out.println((i+1)+": "+actions2A[actions2A.length-1-i]);
             NPuzzleState.performAction(myState2,actions2A[actions2A.length-1-i]);
-            //System.out.println(myState2.toString());
+            System.out.println(myState2.toString());
         }
         
         System.out.println("Solution via H3 with Greedy:-------------");
@@ -93,7 +98,7 @@ public class NPuzzleSearchApp {
         for (int i=0; i<actions3G.length; i++) {
             System.out.println((i+1)+": "+actions3G[actions3G.length-1-i]);
             NPuzzleState.performAction(myState2,actions3G[actions3G.length-1-i]);
-            //System.out.println(myState2.toString());
+            System.out.println(myState2.toString());
         }
         
         System.out.println("Solution via H3 with A*:-------------");
@@ -101,7 +106,7 @@ public class NPuzzleSearchApp {
         for (int i=0; i<actions3A.length; i++) {
             System.out.println((i+1)+": "+actions3A[actions3A.length-1-i]);
             NPuzzleState.performAction(myState2,actions3A[actions3A.length-1-i]);
-            //System.out.println(myState2.toString());
+            System.out.println(myState2.toString());
         }
         
         System.out.println("Solution via H4 with Greedy:-------------");
@@ -109,7 +114,7 @@ public class NPuzzleSearchApp {
         for (int i=0; i<actions4G.length; i++) {
             System.out.println((i+1)+": "+actions4G[actions4G.length-1-i]);
             NPuzzleState.performAction(myState2,actions4G[actions4G.length-1-i]);
-            //System.out.println(myState2.toString());
+            System.out.println(myState2.toString());
         }
         
         System.out.println("Solution via H4 with A*:-------------");
@@ -117,8 +122,8 @@ public class NPuzzleSearchApp {
         for (int i=0; i<actions4A.length; i++) {
             System.out.println((i+1)+": "+actions4A[actions4A.length-1-i]);
             NPuzzleState.performAction(myState2,actions4A[actions4A.length-1-i]);
-            //System.out.println(myState2.toString());
-        }*/
+            System.out.println(myState2.toString());
+        }
         
     }
 

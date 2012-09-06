@@ -234,9 +234,10 @@ public class Node {
 			}
 			repeated.add(s);
 		}
+		// Print EBF of solution //
+		//System.out.println("H1G\t" + effectiveBranchingFactor(n, node.getDepth()));
+		
 		// Return goal state node //
-		//System.out.println("H1G nodes checked: " + n);
-		System.out.println("H1G\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 	
@@ -270,9 +271,10 @@ public class Node {
 			node = queue.getNext();
 			s = node.getState();
 		}
+		// Print EBF of solution //
+		//System.out.println("H1A\t" + effectiveBranchingFactor(n, node.getDepth()));
+		
 		// Return goal state node //
-		//System.out.println("H1G nodes checked: " + n);
-		System.out.println("H1A\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 	
@@ -311,9 +313,10 @@ public class Node {
 			}
 			repeated.add(s);
 		}
+		// Print EBF of solution //
+		//System.out.println("H2G\t" + effectiveBranchingFactor(n, node.getDepth()));
+		
 		// Return goal state node //
-		//System.out.println("H2G nodes checked: " + n);
-		System.out.println("H2G\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 
@@ -341,9 +344,10 @@ public class Node {
 			node = queue.getNext();
 			s = node.getState();
 		}
+		// Print EBF of solution //
+		//System.out.println("H2A\t" + effectiveBranchingFactor(n, node.getDepth()));
+		
 		// Return goal state node //
-		//System.out.println("H2A nodes checked: " + n);
-		System.out.println("H2A\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 	
@@ -382,9 +386,10 @@ public class Node {
 			}
 			repeated.add(s);
 		}
+		// Print EBF of solution //
+		//System.out.println("H3G\t" + effectiveBranchingFactor(n, node.getDepth()));
+		
 		// Return goal state node //
-		//System.out.println("H3G nodes checked: " + n);
-		System.out.println("H3G\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 	
@@ -412,9 +417,10 @@ public class Node {
 			node = queue.getNext();
 			s = node.getState();
 		}
+		// Print EBF of solution //
+		//System.out.println("H3A\t" + effectiveBranchingFactor(n, node.getDepth()));
+		
 		// Return goal state node //
-		//System.out.println("H3A nodes checked: " + n);
-		System.out.println("H3A\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 	
@@ -453,9 +459,10 @@ public class Node {
 			}
 			repeated.add(s);
 		}
+		// Print EBF of solution //
+		//System.out.println("H4G\t" + effectiveBranchingFactor(n, node.getDepth()));
+		
 		// Return goal state node //
-		//System.out.println("H4G nodes checked: " + n);
-		System.out.println("H4G\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 	
@@ -483,9 +490,10 @@ public class Node {
 			node = queue.getNext();
 			s = node.getState();
 		}
+		// Print EBF of solution //
+		//System.out.println("H4A\t" + effectiveBranchingFactor(n, node.getDepth()));
+		
 		// Return goal state node //
-		//System.out.println("H4A nodes checked: " + n);
-		System.out.println("H4A\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 
