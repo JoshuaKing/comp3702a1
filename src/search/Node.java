@@ -1,5 +1,6 @@
 package search;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -199,12 +200,13 @@ public class Node {
      * @return solution if one is found, null otherwise
      */
 	public static Node myH1G(State initial) {
-		// TODO Do we need to check for recursive paths?
+		List<State> repeated = new ArrayList<State>();
 		State s = initial;
 		Node node = new Node(s);
 		MapQueue queue = new MapQueue();
 		
 		// Check if state is the goal state //
+		int n = 0;
 		while (!s.goal()) {			
 			// If not, expand children //
 			Node[] children = node.expand();
@@ -214,13 +216,27 @@ public class Node {
 				
 				// Add children to queue //
 				queue.put(h1, c);
+				n++;
 			}
 			
-			// Pick next closest node to goal //
-			node = queue.getNext();
-			s = node.getState();
+			// Pick next closest node to goal + check for repeated states //
+			boolean found = true;
+			while (found) {
+				found = false;
+				node = queue.getNext();
+				s = node.getState();
+				for (int i = 0; i < repeated.size(); i++) {
+					if (repeated.get(i).equals(s)) {
+						found = true;
+						break;
+					}
+				}
+			}
+			repeated.add(s);
 		}
 		// Return goal state node //
+		//System.out.println("H1G nodes checked: " + n);
+		System.out.println("H1G\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 	
@@ -231,22 +247,23 @@ public class Node {
      * @return solution if one is found, null otherwise
      */
 	public static Node myH1A(State initial) {
-		// TODO Do we need to check for recursive paths?
 		State s = initial;
 		Node node = new Node(s);
 		MapQueue queue = new MapQueue();
 		
 		// Check if state is the goal state //
+		int n = 0;
 		while (!s.goal()) {			
 			// If not, expand children //
 			Node[] children = node.expand();
 			for( Node c : children) {
 				State cs = c.getState();
 				int h1 = cs.getH1();
-				double cost = s.pathcost(c.getAction());
+				double cost = c.getCost() + s.pathcost(c.getAction());
 				
 				// Add children to queue //
 				queue.put((int) (h1 + cost), c);
+				n++;
 			}
 			
 			// Pick next closest node to goal //
@@ -254,16 +271,19 @@ public class Node {
 			s = node.getState();
 		}
 		// Return goal state node //
+		//System.out.println("H1G nodes checked: " + n);
+		System.out.println("H1A\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 	
 	public static Node myH2G(State initial) {
-		// TODO Do we need to check for recursive paths?
+		List<State> repeated = new ArrayList<State>();
 		State s = initial;
 		Node node = new Node(s);
 		MapQueue queue = new MapQueue();
 		
 		// Check if state is the goal state //
+		int n = 0;
 		while (!s.goal()) {			
 			// If not, expand children //
 			Node[] children = node.expand();
@@ -273,33 +293,48 @@ public class Node {
 
 				// Add children to queue //
 				queue.put(h2, c);
+				n++;
 			}
 			
-			// Pick next closest node to goal //
-			node = queue.getNext();
-			s = node.getState();
+			// Pick next closest node to goal + check for repeated states //
+			boolean found = true;
+			while (found) {
+				found = false;
+				node = queue.getNext();
+				s = node.getState();
+				for (int i = 0; i < repeated.size(); i++) {
+					if (repeated.get(i).equals(s)) {
+						found = true;
+						break;
+					}
+				}
+			}
+			repeated.add(s);
 		}
 		// Return goal state node //
+		//System.out.println("H2G nodes checked: " + n);
+		System.out.println("H2G\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 
 	public static Node myH2A(State initial) {
-		// TODO Do we need to check for recursive paths?
 		State s = initial;
 		Node node = new Node(s);
 		MapQueue queue = new MapQueue();
 		
 		// Check if state is the goal state //
+		int n = 0;
 		while (!s.goal()) {			
 			// If not, expand children //
 			Node[] children = node.expand();
 			for( Node c : children) {
 				State cs = c.getState();
 				int h2 = cs.getH2();
-				double cost = s.pathcost(c.getAction());
+				double cost = c.getCost() + s.pathcost(c.getAction());
 
 				// Add children to queue //
 				queue.put((int) (h2 + cost), c);
+				n++;
 			}
 			
 			// Pick next closest node to goal //
@@ -307,16 +342,19 @@ public class Node {
 			s = node.getState();
 		}
 		// Return goal state node //
+		//System.out.println("H2A nodes checked: " + n);
+		System.out.println("H2A\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 	
 	public static Node myH3G(State initial) {
-		// TODO Do we need to check for recursive paths?
+		List<State> repeated = new ArrayList<State>();
 		State s = initial;
 		Node node = new Node(s);
 		MapQueue queue = new MapQueue();
 		
 		// Check if state is the goal state //
+		int n = 0;
 		while (!s.goal()) {			
 			// If not, expand children //
 			Node[] children = node.expand();
@@ -326,16 +364,128 @@ public class Node {
 
 				// Add children to queue //
 				queue.put(h3, c);
+				n++;
+			}
+			
+			// Pick next closest node to goal + check for repeated states //
+			boolean found = true;
+			while (found) {
+				found = false;
+				node = queue.getNext();
+				s = node.getState();
+				for (int i = 0; i < repeated.size(); i++) {
+					if (repeated.get(i).equals(s)) {
+						found = true;
+						break;
+					}
+				}
+			}
+			repeated.add(s);
+		}
+		// Return goal state node //
+		//System.out.println("H3G nodes checked: " + n);
+		System.out.println("H3G\t" + effectiveBranchingFactor(n, node.getDepth()));
+		return node;
+	}
+	
+	public static Node myH3A(State initial) {
+		State s = initial;
+		Node node = new Node(s);
+		MapQueue queue = new MapQueue();
+		
+		// Check if state is the goal state //
+		int n = 0;
+		while (!s.goal()) {			
+			// If not, expand children //
+			Node[] children = node.expand();
+			for( Node c : children) {
+				State cs = c.getState();
+				int h3 = cs.getH3();
+				double cost = c.getCost() + s.pathcost(c.getAction());
+
+				// Add children to queue //
+				queue.put((int) (h3 + cost), c);
+				n++;
 			}
 			
 			// Pick next closest node to goal //
 			node = queue.getNext();
 			s = node.getState();
-			System.out.println("Next State: H3=" + s.getH3());
-			System.out.println(s.toString());
 		}
 		// Return goal state node //
-		System.out.println(s.toString());
+		//System.out.println("H3A nodes checked: " + n);
+		System.out.println("H3A\t" + effectiveBranchingFactor(n, node.getDepth()));
+		return node;
+	}
+	
+	public static Node myH4G(State initial) {
+		List<State> repeated = new ArrayList<State>();
+		State s = initial;
+		Node node = new Node(s);
+		MapQueue queue = new MapQueue();
+		
+		// Check if state is the goal state //
+		int n = 0;
+		while (!s.goal()) {			
+			// If not, expand children //
+			Node[] children = node.expand();
+			for( Node c : children) {
+				State cs = c.getState();
+				int h4 = cs.getH4();
+
+				// Add children to queue //
+				queue.put(h4, c);
+				n++;
+			}
+			
+			// Pick next closest node to goal + check for repeated states //
+			boolean found = true;
+			while (found) {
+				found = false;
+				node = queue.getNext();
+				s = node.getState();
+				for (int i = 0; i < repeated.size(); i++) {
+					if (repeated.get(i).equals(s)) {
+						found = true;
+						break;
+					}
+				}
+			}
+			repeated.add(s);
+		}
+		// Return goal state node //
+		//System.out.println("H4G nodes checked: " + n);
+		System.out.println("H4G\t" + effectiveBranchingFactor(n, node.getDepth()));
+		return node;
+	}
+	
+	public static Node myH4A(State initial) {
+		State s = initial;
+		Node node = new Node(s);
+		MapQueue queue = new MapQueue();
+		
+		// Check if state is the goal state //
+		int n = 0;
+		while (!s.goal()) {			
+			// If not, expand children //
+			Node[] children = node.expand();
+			for( Node c : children) {
+				State cs = c.getState();
+				int h4 = cs.getH4();
+				double cost = c.getCost() + s.pathcost(c.getAction());
+
+				// Add children to queue //
+				queue.put((int) (h4 + cost), c);
+				n++;
+			}
+			
+			// Pick next closest node to goal //
+			node = queue.getNext();
+			s = node.getState();
+		}
+		// Return goal state node //
+		//System.out.println("H4A nodes checked: " + n);
+		System.out.println("H4A\t" + effectiveBranchingFactor(n, node.getDepth()));
 		return node;
 	}
 
