@@ -1,5 +1,10 @@
 package search.npuzzle;
 
+/**
+ * @author Josh King (42344825)
+ * @author Coen McClelland (42363901)
+ */
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;

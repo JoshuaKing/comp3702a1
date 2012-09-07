@@ -6,6 +6,11 @@ import java.lang.Math;
 import search.Action;
 import search.Node;
 
+/**
+ * @author Josh King (42344825)
+ * @author Coen McClelland (42363901)
+ */
+
 public class NPuzzleSearchApp {
 
     /**

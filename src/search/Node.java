@@ -10,6 +10,10 @@ import search.npuzzle.NPuzzleState;
 
 //import search.fifteen.PuzzleState;
 
+/**
+ * @author Josh King (42344825)
+ * @author Coen McClelland (42363901)
+ */
 
 /**
  * The Node is the main class for the search tree.

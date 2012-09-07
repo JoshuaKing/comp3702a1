@@ -1,6 +1,11 @@
 package search;
 
 /**
+ * @author Josh King (42344825)
+ * @author Coen McClelland (42363901)
+ */
+
+/**
  * The State interface.
  * Implement this to search for goal states.
  */

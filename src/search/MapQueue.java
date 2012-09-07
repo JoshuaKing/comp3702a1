@@ -9,6 +9,11 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * @author Josh King (42344825)
+ * @author Coen McClelland (42363901)
+ */
+
 public class MapQueue extends TreeMap<Integer, List<Node>> {
 	List<Node> put(Integer i, Node n) {
 		List<Node> l = super.get(i);
